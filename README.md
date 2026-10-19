@@ -6,7 +6,6 @@ A moderation and community bot built for **The Getaway** Discord server. BanGar 
 ![discord.py](https://img.shields.io/badge/discord.py-2.4-5865F2?logo=discord&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
 ![Heroku](https://img.shields.io/badge/Deployed%20on-Heroku-430098?logo=heroku&logoColor=white)
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
 📖 **[User Guide](https://docs.google.com/document/d/16lfVTHjC3yAU6JOvan6o05PvR2IQvq3_yBomBighuqo/edit?usp=sharing)**: the full command reference for members and moderators.
 
