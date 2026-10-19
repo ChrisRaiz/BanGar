@@ -1,4 +1,4 @@
-# Bangar
+# BanGar
 
 A moderation and community bot built for **The Getaway** Discord server. BanGar handles day-to-day moderation, logs server activity for staff, and keeps members engaged with leveling, polls, a starboard, and a few fun commands.
 
