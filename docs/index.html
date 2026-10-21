@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BanGar · Documentation</title>
+<meta name="description" content="Documentation for BanGar, the moderation and community Discord bot for The Getaway: commands, features, and self-hosting.">
+<link rel="icon" href="assets/avatar.png">
+<meta property="og:image" content="assets/banner.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #08070C;
+  --panel: #12101A;
+  --panel-2: #1A1726;
+  --line: #2A2540;
+  --text: #F2EFF9;
+  --muted: #A49DBB;
+  --purple: #4B2781;
+  --purple-hi: #7A4FC4;
+  --lilac: #BFA4F2;
+  --eye: #E3262E;
+  --ok: #5ED49B;
+  --display: "Bricolage Grotesque", "Manrope", sans-serif;
+  --body: "Manrope", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body {
+  margin: 0; background-color: var(--void); color: var(--text);
+  font: 16px/1.65 var(--body);
+  background-image: radial-gradient(rgba(122,79,196,.16) 1px, transparent 1.4px);
+  background-size: 14px 14px;
+  background-attachment: fixed;
+}
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, var(--void) 35%, transparent 100%);
+}
+a { color: var(--lilac); text-underline-offset: 3px; text-decoration-color: rgba(191,164,242,.4); }
+a:hover { text-decoration-color: var(--lilac); }
+:focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; border-radius: 4px; }
+code, kbd { font: .86em var(--mono); background: var(--panel-2); border: 1px solid var(--line); padding: .1em .4em; border-radius: 5px; color: #E4D9FA; white-space: nowrap; }
+
+.shell { display: grid; grid-template-columns: 240px minmax(0, 1fr); max-width: 1200px; margin: 0 auto; }
+
+/* Sidebar */
+nav.side { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 28px 20px; border-right: 1px solid var(--line); background: rgba(8,7,12,.82); backdrop-filter: blur(6px); }
+.brand { display: flex; align-items: center; gap: 12px; color: var(--text); text-decoration: none; font: 800 20px/1 var(--display); }
+.brand img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--purple-hi); background: #000; }
+.side ol { list-style: none; padding: 0; margin: 28px 0 0; }
+.side li a { display: block; padding: 7px 12px; margin: 2px 0; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500; }
+.side li a:hover { color: var(--text); background: var(--panel); }
+.side li a.active { color: var(--text); background: linear-gradient(90deg, rgba(75,39,129,.55), rgba(75,39,129,.12)); }
+.side .sub a { padding-left: 26px; font-size: 14px; }
+.repo { display: inline-flex; gap: 8px; align-items: center; margin-top: 28px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; color: var(--text); text-decoration: none; font-size: 14px; }
+.repo:hover { border-color: var(--purple-hi); }
+
+main { padding: 40px 48px 96px; min-width: 0; }
+.content { max-width: 780px; }
+
+/* Hero: a Discord-style profile card */
+.profile { max-width: 900px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--panel); margin-bottom: 64px; }
+.profile .banner { display: block; width: 100%; aspect-ratio: 600 / 211; object-fit: cover; background: #000; }
+.profile .body { position: relative; padding: 0 32px 32px; }
+.profile .avatar { position: absolute; top: -56px; left: 28px; width: 112px; height: 112px; border-radius: 50%; border: 6px solid var(--panel); background: #000; }
+.profile .status { position: absolute; top: 28px; left: 112px; width: 26px; height: 26px; border-radius: 50%; background: var(--ok); border: 5px solid var(--panel); }
+.profile .head { display: flex; justify-content: flex-end; align-items: flex-start; gap: 8px; padding-top: 16px; min-height: 64px; flex-wrap: wrap; }
+.pill { font: 600 12px/1 var(--body); padding: 7px 10px; border-radius: 6px; background: var(--panel-2); border: 1px solid var(--line); color: var(--muted); }
+.pill.bot { background: var(--purple); border-color: var(--purple-hi); color: #fff; }
+h1 { font: 800 clamp(40px, 6vw, 60px)/1 var(--display); margin: 8px 0 6px; letter-spacing: -0.02em; }
+.handle { color: var(--muted); font-size: 15px; margin: 0 0 18px; }
+.lede { font-size: 18px; margin: 0 0 24px; max-width: 40em; color: #DCD6EA; }
+.facts { display: flex; flex-wrap: wrap; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); padding-top: 20px; }
+.facts li { padding-right: 32px; margin-right: 32px; border-right: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.facts li:last-child { border-right: 0; }
+.facts strong { display: block; font: 800 26px/1.2 var(--display); color: var(--text); }
+
+/* Sections */
+section { margin-top: 80px; }
+h2 { font: 800 32px/1.15 var(--display); margin: 0 0 14px; letter-spacing: -0.01em; }
+h3 { font: 600 21px/1.3 var(--display); margin: 40px 0 10px; }
+p { margin: 0 0 16px; }
+ul.plain { padding-left: 20px; margin: 0 0 16px; }
+ul.plain li { margin-bottom: 6px; }
+
+/* Feature grid: varied sizes, not identical cards */
+.features { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin: 24px 0; }
+.feat { border: 1px solid var(--line); background: var(--panel); border-radius: 12px; padding: 20px; }
+.feat h3 { margin: 0 0 6px; font-size: 18px; }
+.feat p { margin: 0; color: var(--muted); font-size: 15px; }
+.feat.wide { grid-column: span 4; border-color: rgba(122,79,196,.6); background: linear-gradient(135deg, rgba(75,39,129,.35), var(--panel) 70%); }
+.feat.mid { grid-column: span 2; }
+.feat.third { grid-column: span 2; }
+.feat ul { margin: 10px 0 0; padding-left: 18px; color: #D8D1EA; font-size: 15px; }
+
+/* Command reference: the signature element */
+.cmd-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 20px 0 14px; }
+.search { flex: 1 1 260px; display: flex; align-items: center; gap: 10px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.search:focus-within { border-color: var(--purple-hi); }
+.search input { flex: 1; background: none; border: 0; color: var(--text); font: 15px var(--body); padding: 12px 0; outline: none; }
+.search input::placeholder { color: #6F6888; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: 600 13px var(--body); padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); cursor: pointer; }
+.chip:hover { color: var(--text); }
+.chip[aria-pressed="true"] { background: var(--purple); border-color: var(--purple-hi); color: #fff; }
+.cmds { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); overflow: hidden; }
+.cmd { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 16px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.cmd:last-child { border-bottom: 0; }
+.cmd .syn { font: 500 15px/1.5 var(--mono); color: var(--text); word-break: break-word; }
+.cmd .syn .pfx { color: var(--purple-hi); }
+.cmd .syn .req { color: var(--lilac); }
+.cmd .syn .opt { color: #8A84A3; }
+.cmd .desc { grid-column: 1 / -1; color: #D2CBE3; font-size: 15px; margin: 0; }
+.cmd .meta { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--muted); }
+.cmd .meta code { font-size: 12px; }
+.perm { justify-self: end; align-self: start; font: 600 12px/1 var(--body); padding: 6px 9px; border-radius: 6px; white-space: nowrap; }
+.perm.all { color: var(--ok); background: rgba(94,212,155,.1); border: 1px solid rgba(94,212,155,.3); }
+.perm.mod { color: #FF8A8F; background: rgba(227,38,46,.12); border: 1px solid rgba(227,38,46,.4); }
+.empty { padding: 28px 20px; color: var(--muted); }
+.legend { font-size: 14px; color: var(--muted); margin-top: 10px; }
+.legend .req { color: var(--lilac); font-family: var(--mono); }
+.legend .opt { color: #8A84A3; font-family: var(--mono); }
+
+/* Tables, code, notes */
+.table-wrap { overflow-x: auto; margin: 18px 0 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th { text-align: left; font-weight: 600; font-size: 13px; color: var(--muted); padding: 12px 16px; background: var(--panel-2); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 11px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+.code { margin: 14px 0 24px; border: 1px solid var(--line); border-radius: 12px; background: #0B0A11; overflow: hidden; }
+.code .top { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px 8px 16px; border-bottom: 1px solid var(--line); font: 12px var(--mono); color: var(--muted); }
+.code pre { margin: 0; padding: 16px; overflow-x: auto; font: 14px/1.7 var(--mono); color: #E2DAF3; }
+.code .c { color: #6F6888; }
+.copy { font: 600 12px var(--body); color: var(--text); background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.copy:hover { border-color: var(--purple-hi); }
+.note { border: 1px solid var(--line); border-left: 3px solid var(--purple-hi); background: var(--panel); border-radius: 10px; padding: 14px 18px; margin: 20px 0; }
+.note.red { border-left-color: var(--eye); }
+.formula { font: 500 16px var(--mono); padding: 14px 18px; border-radius: 10px; background: var(--panel-2); border: 1px solid var(--line); display: inline-block; margin: 4px 0 16px; color: var(--lilac); }
+ol.steps { list-style: none; counter-reset: st; padding: 0; margin: 18px 0; }
+ol.steps > li { counter-increment: st; position: relative; padding-left: 46px; margin-bottom: 18px; }
+ol.steps > li::before { content: counter(st); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--purple); color: #fff; font: 700 14px/30px var(--display); text-align: center; }
+
+footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; display: flex; gap: 12px; align-items: center; }
+footer img { width: 28px; height: 28px; border-radius: 50%; }
+
+@media (max-width: 900px) {
+  .shell { grid-template-columns: 1fr; }
+  nav.side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 18px 16px; }
+  .side ol { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 14px; }
+  .side .sub { display: none; }
+  .side li a { padding: 6px 10px; }
+  .repo { margin-top: 10px; }
+  main { padding: 28px 16px 64px; }
+  .features { grid-template-columns: 1fr 1fr; }
+  .feat.wide { grid-column: 1 / -1; }
+  .feat.mid, .feat.third { grid-column: span 1; }
+}
+@media (max-width: 560px) {
+  .profile .body { padding: 0 18px 22px; }
+  .profile .avatar { width: 88px; height: 88px; top: -44px; left: 16px; border-width: 5px; }
+  .profile .status { top: 22px; left: 82px; width: 22px; height: 22px; border-width: 4px; }
+  .profile .head { min-height: 52px; }
+  .facts { gap: 12px 0; }
+  .facts li { padding-right: 16px; margin-right: 16px; }
+  .facts li:nth-child(2) { border-right: 0; }
+  .features { grid-template-columns: 1fr; }
+  .feat.mid, .feat.third { grid-column: 1 / -1; }
+  .cmd { grid-template-columns: 1fr; }
+  .perm { justify-self: start; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <nav class="side" aria-label="Documentation sections">
+    <a class="brand" href="#top"><img src="assets/avatar.png" alt="">BanGar</a>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#start">Getting started</a></li>
+      <li><a href="#commands">Commands</a></li>
+      <li><a href="#moderation">Moderation</a></li>
+      <li class="sub"><a href="#automod">Auto-moderation</a></li>
+      <li class="sub"><a href="#logging">Logging</a></li>
+      <li class="sub"><a href="#modmail">Modmail</a></li>
+      <li><a href="#community">Community</a></li>
+      <li class="sub"><a href="#leveling">Leveling</a></li>
+      <li class="sub"><a href="#gamble">Crit or Quit</a></li>
+      <li><a href="#hosting">Self-hosting</a></li>
+      <li class="sub"><a href="#config">Configuration</a></li>
+      <li class="sub"><a href="#schema">Database</a></li>
+    </ol>
+    <a class="repo" href="https://github.com/ChrisRaiz/BanGar">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      View on GitHub
+    </a>
+  </nav>
+
+  <main id="top">
+    <header class="profile">
+      <img class="banner" src="assets/banner.png" alt="BanGar banner: The Getaway">
+      <div class="body">
+        <img class="avatar" src="assets/avatar.png" alt="BanGar avatar">
+        <span class="status" aria-hidden="true"></span>
+        <div class="head"><span class="pill bot">BOT</span><span class="pill">Python · discord.py</span><span class="pill">Hosted on Heroku</span></div>
+        <h1>BanGar</h1>
+        <p class="handle">Moderation and community bot for The Getaway Discord server</p>
+        <p class="lede">BanGar handles day-to-day moderation, keeps a full activity log for staff, and gives members leveling, polls, a starboard, and a few games to play.</p>
+        <ul class="facts">
+          <li><strong>25</strong>commands</li>
+          <li><strong>10</strong>feature modules</li>
+          <li><strong>!</strong>default prefix</li>
+        </ul>
+      </div>
+    </header>
+
+    <div class="content">
+      <section id="overview" style="margin-top:0">
+        <h2>Overview</h2>
+        <p>BanGar is a single-server Discord bot written in asynchronous Python with discord.py 2.4. It stores its data in PostgreSQL and runs on Heroku as a worker process.</p>
+        <div class="features">
+          <div class="feat wide"><h3>Moderation</h3><p>Kick, ban, mute, and clean up channels, with automatic protection against mention spam.</p>
+            <ul><li>Timed mutes that lift themselves</li><li>Bulk message deletion, filtered by member</li><li>Every action posted to the mod log</li></ul></div>
+          <div class="feat mid"><h3>Logging</h3><p>Message edits and deletions, plus name, nickname, avatar, and role changes.</p></div>
+          <div class="feat third"><h3>Leveling</h3><p>Members earn XP for chatting and climb a server leaderboard.</p></div>
+          <div class="feat third"><h3>Starboard and polls</h3><p>Starred messages get reposted. Moderators run native Discord polls.</p></div>
+          <div class="feat third"><h3>Modmail</h3><p>Members DM the bot to reach the moderators privately.</p></div>
+        </div>
+      </section>
+
+      <section id="start">
+        <h2>Getting started</h2>
+        <p>Every command starts with the server's prefix, which is <code>!</code> by default. You can also mention the bot instead of typing the prefix:</p>
+        <div class="code"><div class="top"><span>Discord</span></div><pre>!help
+@BanGar help</pre></div>
+        <p>Run <code>!help</code> to see every command, or <code>!help &lt;command&gt;</code> to see how to use one. Moderators with the Manage Server permission can change the prefix with <code>!prefix</code> (up to 5 characters).</p>
+        <div class="note">If you run a command while BanGar is starting up, it replies "Bot is still initializing." Wait a few seconds and try again.</div>
+      </section>
+
+      <section id="commands">
+        <h2>Commands</h2>
+        <p>Search by name or alias, or filter by category.</p>
+        <div class="cmd-tools">
+          <label class="search">
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="#A49DBB" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="#A49DBB" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <input id="q" type="search" placeholder="Search commands, like mute or lb" aria-label="Search commands">
+          </label>
+          <div class="chips" role="group" aria-label="Filter by category" id="chips"></div>
+        </div>
+        <div class="cmds" id="cmds" aria-live="polite"></div>
+        <p class="legend"><span class="req">&lt;required&gt;</span> arguments must be given. <span class="opt">[optional]</span> arguments can be left out. Wrap text with spaces in "quotes".</p>
+      </section>
+
+      <section id="moderation">
+        <h2>Moderation</h2>
+        <p>Moderation commands check both your permissions and BanGar's. BanGar can only act on members whose highest role is below its own, so keep its role near the top of the role list.</p>
+        <h3>How mutes work</h3>
+        <ul class="plain">
+          <li>A mute removes the member's roles, gives them the Mute role, and saves their old roles in the database.</li>
+          <li>Unmuting, by command or when the timer runs out, restores the saved roles.</li>
+          <li>Leave out the minutes to mute until a moderator runs <code>!unmute</code>.</li>
+        </ul>
+        <div class="code"><div class="top"><span>Example</span></div><pre>!mute @Rowan 30 Spamming the trade channel
+!clear @Rowan 50
+!unmute @Rowan Appeal accepted</pre></div>
+
+        <h3 id="automod">Auto-moderation</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Rule</th><th>What BanGar does</th></tr></thead>
+          <tbody>
+            <tr><td>Mention spam</td><td>If a member sends 5 or more messages with mentions within 30 seconds, BanGar warns them and mutes them temporarily.</td></tr>
+            <tr><td>No-link channels</td><td>Deletes messages with links in the channels listed in <code>links_forbidden</code>.</td></tr>
+            <tr><td>No-image channels</td><td>Deletes image attachments in the channels listed in <code>images_forbidden</code>.</td></tr>
+          </tbody>
+        </table></div>
+
+        <h3 id="logging">Logging</h3>
+        <p>BanGar posts an embed to the mod log channel for each of these events:</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Event</th><th>What's recorded</th></tr></thead>
+          <tbody>
+            <tr><td>Message edited</td><td>The author and the message before and after</td></tr>
+            <tr><td>Message deleted</td><td>The author and the deleted text or image</td></tr>
+            <tr><td>Profile changed</td><td>Username, display name, avatar, or discriminator, before and after</td></tr>
+            <tr><td>Roles changed</td><td>The member's roles before and after</td></tr>
+            <tr><td>Moderation action</td><td>Kicks, bans, mutes, and unmutes, with the member and reason</td></tr>
+          </tbody>
+        </table></div>
+        <p>Errors go to a separate bot-errors channel, so they don't clutter the mod log.</p>
+
+        <h3 id="modmail">Modmail</h3>
+        <p>Members can message the moderators privately by sending BanGar a direct message of at least 10 characters. BanGar forwards it to the mod log with the member's name and avatar, and replies "Message relayed to moderators."</p>
+      </section>
+
+      <section id="community">
+        <h2>Community features</h2>
+        <h3 id="leveling">Leveling</h3>
+        <p>Members earn 10 to 20 XP for a message, once per minute, so spamming doesn't speed it up. Levels follow this curve:</p>
+        <div class="formula">level = floor(XP ÷ 42) <sup>0.55</sup></div>
+        <p>Level-ups are announced in the level-up channel. Check progress with <code>!level</code>, <code>!rank</code>, and <code>!leaderboard</code>.</p>
+
+        <h3>Starboard</h3>
+        <p>React to a message with ⭐ to send it to the starboard channel. Each new star updates the count on the starboard post. Stars on your own messages or on bot messages are removed.</p>
+
+        <h3>Polls</h3>
+        <p>Moderators create native Discord polls with up to 10 answers. The question goes first in quotes, then the duration in hours, then <code>true</code> or <code>false</code> for multiple choice, then the answers:</p>
+        <div class="code"><div class="top"><span>Example</span></div><pre>!createpoll "Raid night?" 24 false Friday Saturday Sunday</pre></div>
+
+        <h3>Name colors and welcome messages</h3>
+        <ul class="plain">
+          <li>React with ❤️, 💙, or 💜 on the role-select message to pick a name color. Choosing a new color replaces the old one.</li>
+          <li>New members get a welcome message, a welcome DM, and a starting role. A goodbye message is posted when someone leaves.</li>
+          <li>Every Monday at 12:00, BanGar reminds the general channel to follow the rules.</li>
+        </ul>
+
+        <h3 id="gamble">Crit or Quit</h3>
+        <p><code>!gamble</code> hosts a gold-rolling game in the channel. Each round, everyone who joined rolls between 0 and the round's gold cap. The highest roll wins, and the lowest roller owes the winner the difference. The cap goes up by the increment every round, and BanGar posts a payout summary at the end.</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Type in chat</th><th>Effect</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>jr</kbd> or <kbd>1</kbd></td><td>Join this round</td></tr>
+            <tr><td><kbd>lr</kbd> or <kbd>0</kbd></td><td>Leave this round</td></tr>
+            <tr><td><kbd>js</kbd> or <kbd>3</kbd></td><td>Join every remaining round</td></tr>
+            <tr><td><kbd>ls</kbd> or <kbd>2</kbd></td><td>Leave the session</td></tr>
+          </tbody>
+        </table></div>
+        <p>Up to 25 players can join a round, and a session can run up to 20 rounds. A round needs at least 2 players.</p>
+      </section>
+
+      <section id="hosting">
+        <h2>Self-hosting</h2>
+        <p>BanGar is built for The Getaway, so its channel and role IDs are set in the code. To run it on another server, first replace those IDs (see <a href="#config">Configuration</a>).</p>
+        <ol class="steps">
+          <li>Create a bot in the <a href="https://discord.com/developers/applications">Discord Developer Portal</a> and turn on all three privileged gateway intents.</li>
+          <li>Clone the repo and install the dependencies:
+            <div class="code"><div class="top"><span>bash</span><button class="copy" type="button">Copy</button></div><pre>git clone https://github.com/ChrisRaiz/BanGar.git
+cd BanGar
+pip install -r requirements.txt</pre></div></li>
+          <li>Set the two environment variables and start the bot:
+            <div class="code"><div class="top"><span>bash</span><button class="copy" type="button">Copy</button></div><pre>export DISCORD_BOT_TOKEN="your-bot-token"
+export DATABASE_URL="postgresql://user:password@host:5432/dbname"
+python3 launcher.py</pre></div></li>
+        </ol>
+        <p>BanGar creates its database tables the first time it starts.</p>
+        <h3>Deploying to Heroku</h3>
+        <ol class="steps">
+          <li>Create a Heroku app and add Heroku Postgres, which sets <code>DATABASE_URL</code> for you.</li>
+          <li>Add <code>DISCORD_BOT_TOKEN</code> under Settings, then Config Vars.</li>
+          <li>Push the repo and turn on the <code>worker</code> dyno. The <code>Procfile</code> runs <code>python3 ./launcher.py</code> on Python 3.12.</li>
+        </ol>
+
+        <h3 id="config">Configuration</h3>
+        <p>These IDs need to match your server:</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Setting</th><th>File</th></tr></thead>
+          <tbody>
+            <tr><td>Server, general channel, bot-errors channel, owner ID</td><td><code>library/bot/__init__.py</code></td></tr>
+            <tr><td>Mod log channel, Mute role, no-link and no-image channels</td><td><code>library/cogs/mod.py</code>, <code>log.py</code></td></tr>
+            <tr><td>Level-up channel</td><td><code>library/cogs/exp.py</code></td></tr>
+            <tr><td>Welcome and goodbye channels, starting role</td><td><code>library/cogs/welcome.py</code></td></tr>
+            <tr><td>Starboard channel, role-select message, color roles</td><td><code>library/cogs/reactions.py</code></td></tr>
+          </tbody>
+        </table></div>
+
+        <h3 id="schema">Database</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Table</th><th>Stores</th><th>Key columns</th></tr></thead>
+          <tbody>
+            <tr><td><code>guilds</code></td><td>Server settings</td><td><code>guild_id</code>, <code>prefix</code></td></tr>
+            <tr><td><code>exp</code></td><td>Member XP and levels</td><td><code>user_id</code>, <code>xp</code>, <code>level</code>, <code>xp_lock</code></td></tr>
+            <tr><td><code>mutes</code></td><td>Active mutes and saved roles</td><td><code>user_id</code>, <code>role_ids</code>, <code>end_time</code></td></tr>
+            <tr><td><code>starboard</code></td><td>Starred messages</td><td><code>root_message_id</code>, <code>star_message_id</code>, <code>stars</code></td></tr>
+            <tr><td><code>polls</code></td><td>Active polls</td><td><code>poll_message_id</code>, <code>channel_id</code>, <code>question</code></td></tr>
+          </tbody>
+        </table></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Part</th><th>Technology</th></tr></thead>
+          <tbody>
+            <tr><td>Language</td><td>Python 3.12 (asyncio)</td></tr>
+            <tr><td>Framework</td><td>discord.py 2.4, organized into cogs</td></tr>
+            <tr><td>Database</td><td>PostgreSQL via psycopg2</td></tr>
+            <tr><td>Scheduling</td><td>APScheduler</td></tr>
+            <tr><td>Hosting</td><td>Heroku worker dyno</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <footer><img src="assets/avatar.png" alt="">Built by Chris Raiz for The Getaway. Released under the MIT License.</footer>
+    </div>
+  </main>
+</div>
+
+<script>
+var CMDS = [
+  {c:'Moderation', n:'kick', a:'<members...> [reason]', d:'Kicks one or more members from the server.', p:'Kick Members'},
+  {c:'Moderation', n:'ban', a:'<members...> [reason]', d:'Bans one or more members from the server.', p:'Ban Members'},
+  {c:'Moderation', n:'mute', a:'<members...> [minutes] [reason]', d:'Mutes members. Leave out the minutes to mute until someone runs unmute.', p:'Manage Server, Manage Roles'},
+  {c:'Moderation', n:'unmute', a:'<members...> [reason]', d:'Lifts a mute and restores the member’s roles.', p:'Manage Server, Manage Roles'},
+  {c:'Moderation', n:'clear', al:['purge'], a:'[members...] [limit]', d:'Deletes recent messages in the channel, optionally only from certain members. Limit defaults to 10, up to 500.', p:'Manage Messages'},
+  {c:'Leveling', n:'level', al:['lvl'], a:'[member]', d:'Shows a member’s level and XP. Defaults to you.'},
+  {c:'Leveling', n:'rank', a:'[member]', d:'Shows a member’s position on the server leaderboard.'},
+  {c:'Leveling', n:'leaderboard', al:['lb'], a:'', d:'Shows the XP leaderboard, page by page.'},
+  {c:'Polls', n:'createpoll', al:['mkpoll'], a:'<"question"> <hours> <multiple> <answers...>', d:'Starts a native Discord poll with up to 10 answers. Set multiple to true or false.', p:'Manage Server'},
+  {c:'Polls', n:'endpoll', a:'<"question">', d:'Ends an active poll early and posts the results.', p:'Manage Server'},
+  {c:'Polls', n:'activepolls', a:'', d:'Lists the polls that are still running.', p:'Manage Server'},
+  {c:'Fun', n:'hello', al:['hi'], a:'', d:'BanGar says hello.'},
+  {c:'Fun', n:'dice', al:['roll'], a:'<NdS>', d:'Rolls up to 25 dice. For example, 2d6 rolls two six-sided dice.', cd:'1 use per minute per member'},
+  {c:'Fun', n:'slap', al:['hit'], a:'<member> [reason]', d:'Slaps a member, for a reason of your choice.'},
+  {c:'Fun', n:'echo', al:['say'], a:'<message>', d:'Deletes your message and repeats it as BanGar.', cd:'1 use per 15 seconds per server'},
+  {c:'Fun', n:'fact', al:['animal','fa'], a:'[dog | cat | bird | fox]', d:'Posts a random animal fact with a picture. Picks an animal if you don’t.', cd:'3 uses per minute per server'},
+  {c:'Fun', n:'gamble', a:'<rounds> <increment> [signup seconds]', d:'Hosts a Crit or Quit session. Up to 20 rounds, an increment up to 1,000,000 gold, and 30 seconds of signup by default.'},
+  {c:'Info', n:'userinfo', al:['memberinfo','ui','mi'], a:'[member]', d:'Shows a member’s top role, status, activity, account creation and join dates, and boost status.'},
+  {c:'Info', n:'serverinfo', al:['guildinfo','si','gi'], a:'', d:'Shows the server’s owner, member and bot counts, bans, channels, roles, and invites.'},
+  {c:'Info', n:'help', a:'[command]', d:'Lists every command, or explains one in detail.'},
+  {c:'Bot', n:'ping', a:'', d:'Shows BanGar’s connection latency and response time.'},
+  {c:'Bot', n:'stats', a:'', d:'Shows the bot, Python, and discord.py versions, plus uptime, CPU time, and memory use.'},
+  {c:'Bot', n:'prefix', a:'<new prefix>', d:'Changes the command prefix, up to 5 characters.', p:'Manage Server'},
+  {c:'Bot', n:'setactivity', a:'<text>', d:'Changes the activity shown under BanGar’s name.', p:'Manage Server'},
+  {c:'Bot', n:'shutdown', a:'', d:'Shuts the bot down.', p:'Administrator'}
+];
+var CATS = ['All', 'Moderation', 'Leveling', 'Polls', 'Fun', 'Info', 'Bot'];
+var state = { cat: 'All', q: '' };
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function syntax(cmd) {
+  var args = cmd.a.replace(/(<[^>]+>)|(\[[^\]]+\])/g, function (m, r, o) {
+    return r ? '<span class="req">' + esc(r) + '</span>' : '<span class="opt">' + esc(o) + '</span>';
+  });
+  return '<span class="pfx">!</span>' + cmd.n + (cmd.a ? ' ' + args : '');
+}
+function render() {
+  var q = state.q.trim().toLowerCase().replace(/^!/, '');
+  var list = CMDS.filter(function (c) {
+    var inCat = state.cat === 'All' || c.c === state.cat;
+    var hay = [c.n].concat(c.al || []).join(' ') + ' ' + c.d.toLowerCase();
+    return inCat && (!q || hay.indexOf(q) !== -1);
+  });
+  var box = document.getElementById('cmds');
+  if (!list.length) { box.innerHTML = '<div class="empty">No commands match "' + esc(state.q) + '". Try a shorter search or pick All.</div>'; return; }
+  box.innerHTML = list.map(function (c) {
+    var meta = [];
+    meta.push('<span>' + c.c + '</span>');
+    if (c.al) meta.push('<span>Aliases: ' + c.al.map(function (a) { return '<code>' + a + '</code>'; }).join(' ') + '</span>');
+    if (c.cd) meta.push('<span>Cooldown: ' + c.cd + '</span>');
+    return '<div class="cmd"><div class="syn">' + syntax(c) + '</div>' +
+      (c.p ? '<span class="perm mod">' + c.p + '</span>' : '<span class="perm all">Everyone</span>') +
+      '<p class="desc">' + esc(c.d) + '</p><div class="meta">' + meta.join('') + '</div></div>';
+  }).join('');
+}
+var chips = document.getElementById('chips');
+chips.innerHTML = CATS.map(function (c) { return '<button class="chip" type="button" aria-pressed="' + (c === 'All') + '">' + c + '</button>'; }).join('');
+chips.addEventListener('click', function (e) {
+  var b = e.target.closest('.chip'); if (!b) return;
+  state.cat = b.textContent;
+  chips.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+  render();
+});
+document.getElementById('q').addEventListener('input', function (e) { state.q = e.target.value; render(); });
+render();
+
+document.querySelectorAll('.copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var text = btn.closest('.code').querySelector('pre').innerText;
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () {
+      btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+    }, function () {});
+  });
+});
+(function () {
+  var links = [].slice.call(document.querySelectorAll('.side li a'));
+  var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function update() {
+    var y = window.scrollY + 120, idx = 0;
+    targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top + window.scrollY <= y) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+  window.addEventListener('scroll', update, { passive: true }); update();
+})();
+</script>
+</body>
+</html>
