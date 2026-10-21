@@ -264,7 +264,7 @@ class Mod(Cog):
           unmutes = await self.mute_members(message, [message.author], 5, reason="Mention spam")
 
           if len(unmutes):
-            await asyncio.sleep(5)
+            await asyncio.sleep(5*60)
             await self.unmute_members(message.guild, [message.author])
 
       # elif profanity.contains_profanity(message.content):
