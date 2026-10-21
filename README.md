@@ -1,13 +1,24 @@
-# BanGar
+<p align="center">
+  <img src="docs/assets/avatar.png" alt="BanGar avatar" width="96">
+</p>
 
-A moderation and community bot built for **The Getaway** Discord server. BanGar handles day-to-day moderation, logs server activity for staff, and keeps members engaged with leveling, polls, a starboard, and a few fun commands.
+<h1 align="center">BanGar</h1>
 
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
-![discord.py](https://img.shields.io/badge/discord.py-2.4-5865F2?logo=discord&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
-![Heroku](https://img.shields.io/badge/Deployed%20on-Heroku-430098?logo=heroku&logoColor=white)
+<p align="center">
+  A moderation and community bot built for <b>The Getaway</b> Discord server.<br>
+  BanGar handles day-to-day moderation, logs server activity for staff, and keeps members engaged with leveling, polls, a starboard, and a few fun commands.
+</p>
 
-📖 **[User Guide](https://docs.google.com/document/d/16lfVTHjC3yAU6JOvan6o05PvR2IQvq3_yBomBighuqo/edit?usp=sharing)**: the full command reference for members and moderators.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white" alt="Python 3.12">
+  <img src="https://img.shields.io/badge/discord.py-2.4-5865F2?logo=discord&logoColor=white" alt="discord.py 2.4">
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/Deployed%20on-Heroku-430098?logo=heroku&logoColor=white" alt="Deployed on Heroku">
+</p>
+
+<p align="center">
+  📖 <a href="https://chrisraiz.github.io/BanGar/"><b>Documentation</b></a>: the full command reference, features, and setup guide.
+</p>
 
 ---
 
@@ -60,6 +71,7 @@ A moderation and community bot built for **The Getaway** Discord server. BanGar 
 ├── Procfile              # Heroku process definition
 ├── runtime.txt           # Python version for Heroku
 ├── requirements.txt
+├── docs/                 # Documentation site (GitHub Pages)
 ├── data/
 │   ├── db/build.sql      # Database schema
 │   └── profanity.txt
@@ -88,8 +100,8 @@ BanGar was built for one server, so the channel and role IDs are hardcoded in th
 **Requirements:** Python 3.12, a PostgreSQL database, and a Discord bot token with all privileged intents turned on.
 
 ```bash
-git clone https://github.com/ChrisRaiz/Gliffs-Discord-Bot.git
-cd Gliffs-Discord-Bot
+git clone https://github.com/ChrisRaiz/BanGar.git
+cd BanGar
 pip install -r requirements.txt
 
 export DISCORD_BOT_TOKEN="your-bot-token"
